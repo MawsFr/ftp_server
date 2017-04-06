@@ -1,7 +1,4 @@
 package com.lille1.tps.car.user;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 public class User {
 	
@@ -13,6 +10,8 @@ public class User {
 		this.login = login;
 		this.password = password;
 	}
+	public User() {}
+	
 	public String getLogin() {
 		return login;
 	}

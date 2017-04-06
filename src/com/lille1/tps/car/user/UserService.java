@@ -23,8 +23,8 @@ public class UserService {
 		return instance;
 	}
 	
-	public void connect(User user) {
-		
+	public boolean exists(final String login, final String password) {
+		return UsersDB.getInstance().exists(login, password);
 	}
 	
 	public boolean exists(String login) {
@@ -37,7 +37,6 @@ public class UserService {
 			commandService.processCommand(null, uc);
 			uc.start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//TODO : SEE IF MANAGER IS NEEDED

@@ -32,6 +32,11 @@ public class UsersDB {
 		return db;
 	}
 	
+	public boolean exists(final String login, final String password) {
+		final User user = new User(login, password);
+		return  login != null && password != null && this.users.get(login).equals(user);
+	}
+	
 	public boolean exists(final String login) {
 		return login != null && this.users.containsKey(login);
 	}

@@ -1,7 +1,6 @@
 package com.lille1.tps.car.command;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +9,9 @@ import com.lille1.tps.car.user.UserConnection;
 
 public class CommandService {
 	public static final String COMMAND_USER = "USER";
-	public static final String COMMAND_PWD = "PASS";
+	public static final String COMMAND_PASS = "PASS";
+	public static final String COMMAND_PWD = "PWD";
+	public static final String COMMAND_PWD_WINDOWS = "XPWD";
 	
 	public static final String READY_COMMAND = "READY";
 	public static final String INVALID_COMMAND = "INVALID_COMMAND";
@@ -30,7 +31,10 @@ public class CommandService {
 	private CommandService() {
 		this.commands = new HashMap<>();
 		this.commands.put(COMMAND_USER, new UserCommand());
-		this.commands.put(COMMAND_PWD, new PassCommand());
+		this.commands.put(COMMAND_PASS, new PassCommand());
+		final PwdCommand pwd = new PwdCommand();
+		this.commands.put(COMMAND_PWD, pwd);
+		this.commands.put(COMMAND_PWD_WINDOWS, pwd);
 		this.commands.put(READY_COMMAND, new ReadyCommand());
 		this.commands.put(INVALID_COMMAND, new InvalidCommand());
 	}

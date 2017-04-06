@@ -20,11 +20,16 @@ public class UserConnection {
 	private OutputStream os;
 	private DataOutputStream dos;
 	
+	private Socket socket;
+	
 	private String command;
+	
+	private User user;
 	
 	private boolean running;
 	
 	public UserConnection(Socket socket) {
+		this.socket = socket;
 		try {
 			MyLogger.i("Création de la connexion ...");
 			is = socket.getInputStream();
@@ -56,6 +61,33 @@ public class UserConnection {
 					}
 					
 				} while(running);
+				try {
+					dos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					os.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					isr.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					socket.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				MyLogger.i("Interruption de la connection avec le user " + user.getLogin());
+				thread.interrupt();
 				
 			}
 		});
@@ -77,6 +109,14 @@ public class UserConnection {
 
 	public void setDos(DataOutputStream dos) {
 		this.dos = dos;
+	}
+
+	public User getUser() {
+		return user;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	
