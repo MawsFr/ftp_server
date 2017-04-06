@@ -52,6 +52,7 @@ public class UserConnection {
 						CommandService.getInstance().processCommand(command, UserConnection.this);
 					} catch (IOException e) {
 						e.printStackTrace();
+						running = false;
 					}
 					
 				} while(running);

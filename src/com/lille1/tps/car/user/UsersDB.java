@@ -10,7 +10,7 @@ public class UsersDB {
 	private Map<String, User> users;
 	
 	private UsersDB() {
-		
+		init();
 	}
 	
 	public void init() {
