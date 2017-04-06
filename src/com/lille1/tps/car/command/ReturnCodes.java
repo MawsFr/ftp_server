@@ -14,6 +14,11 @@ public class ReturnCodes {
 	public static final String RC_220 = "220 Service Ready" + CRLF;
 
 	/**
+	 * Passive mode
+	 */
+	public static final String RC_227 = "227 Passive mode" + CRLF;
+	
+	/**
 	 * Login success
 	 */
 	public static final String RC_230 = "230 Login success" + CRLF;
@@ -42,7 +47,6 @@ public class ReturnCodes {
 	 * Unexisting command
 	 */
 	public static final String RC_502 = "502 Unexisting command" + CRLF;
-
 
 
 	/**

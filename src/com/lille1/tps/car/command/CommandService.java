@@ -13,9 +13,11 @@ public class CommandService {
 	public static final String COMMAND_PWD = "PWD";
 	public static final String COMMAND_PWD_WINDOWS = "XPWD";
 	public static final String COMMAND_TYPE = "TYPE";
+	public static final String COMMAND_PASV = "PASV";
 	
 	public static final String READY_COMMAND = "READY";
 	public static final String INVALID_COMMAND = "INVALID_COMMAND";
+	private static final String COMMAND_PORT = "PORT";
 	
 	private Map<String, Command> commands;
 	
@@ -39,6 +41,8 @@ public class CommandService {
 		this.commands.put(COMMAND_PWD, pwd);
 		this.commands.put(COMMAND_PWD_WINDOWS, pwd);
 		this.commands.put(COMMAND_TYPE, new TypeCommand());
+		this.commands.put(COMMAND_PASV, new PasvCommand());
+		this.commands.put(COMMAND_PORT, new PortCommand());
 	}
 
 	public synchronized void processCommand(String theCommand, UserConnection connection) throws IOException {
