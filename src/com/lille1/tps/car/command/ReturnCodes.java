@@ -5,6 +5,10 @@ public class ReturnCodes {
 	public static final String CRLF = "\r\n";
 
 	/**
+	 * Command executed OK
+	 */
+	public static final String RC_200 = "200 Command executed OK" + CRLF;
+	/**
 	 * Service ready
 	 */
 	public static final String RC_220 = "220 Service Ready" + CRLF;
@@ -28,11 +32,18 @@ public class ReturnCodes {
 	 * Invalid login or password
 	 */
 	public static final String RC_430 = "430 Invalid login or password" + CRLF;
-
+	
+	/**
+	 * Syntax error
+	 */
+	public static final String RC_501 = "501 Syntax error" + CRLF;
+	
 	/**
 	 * Unexisting command
 	 */
 	public static final String RC_502 = "502 Unexisting command" + CRLF;
+
+
 
 	/**
 	 * Allows to fill a return code containing custom parameters with a parameters table

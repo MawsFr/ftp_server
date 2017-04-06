@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import com.lille1.tps.car.command.CommandService;
+import com.lille1.tps.car.config.Configuration;
 import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.UserService;
 

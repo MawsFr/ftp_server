@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 import com.lille1.tps.car.command.CommandService;
+import com.lille1.tps.car.config.Configuration;
 
 public class UserConnection {
 	
@@ -26,10 +27,13 @@ public class UserConnection {
 	
 	private User user;
 	
+	private Configuration config;
+	
 	private boolean running;
 	
 	public UserConnection(Socket socket) {
 		this.socket = socket;
+		this.config = new Configuration();
 		try {
 			MyLogger.i("Création de la connexion ...");
 			is = socket.getInputStream();
@@ -117,6 +121,10 @@ public class UserConnection {
 	
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public Configuration getConfig() {
+		return config;
 	}
 	
 	

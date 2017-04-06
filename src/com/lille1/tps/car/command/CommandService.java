@@ -12,6 +12,7 @@ public class CommandService {
 	public static final String COMMAND_PASS = "PASS";
 	public static final String COMMAND_PWD = "PWD";
 	public static final String COMMAND_PWD_WINDOWS = "XPWD";
+	public static final String COMMAND_TYPE = "TYPE";
 	
 	public static final String READY_COMMAND = "READY";
 	public static final String INVALID_COMMAND = "INVALID_COMMAND";
@@ -30,13 +31,14 @@ public class CommandService {
 	
 	private CommandService() {
 		this.commands = new HashMap<>();
+		this.commands.put(READY_COMMAND, new ReadyCommand());
+		this.commands.put(INVALID_COMMAND, new InvalidCommand());
 		this.commands.put(COMMAND_USER, new UserCommand());
 		this.commands.put(COMMAND_PASS, new PassCommand());
 		final PwdCommand pwd = new PwdCommand();
 		this.commands.put(COMMAND_PWD, pwd);
 		this.commands.put(COMMAND_PWD_WINDOWS, pwd);
-		this.commands.put(READY_COMMAND, new ReadyCommand());
-		this.commands.put(INVALID_COMMAND, new InvalidCommand());
+		this.commands.put(COMMAND_TYPE, new TypeCommand());
 	}
 
 	public synchronized void processCommand(String theCommand, UserConnection connection) throws IOException {
