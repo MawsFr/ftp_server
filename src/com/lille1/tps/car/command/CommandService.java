@@ -45,7 +45,7 @@ public class CommandService {
 		this.commands.put(COMMAND_PORT, new PortCommand());
 	}
 
-	public synchronized void processCommand(String theCommand, UserConnection connection) throws IOException {
+	public synchronized String processCommand(String theCommand, UserConnection connection) throws IOException {
 		Command command = null;
 		String[] tokens = null;
 		if(theCommand == null) {
@@ -57,9 +57,7 @@ public class CommandService {
 				command = getCommand(INVALID_COMMAND);
 			}
 		}
-		String returnCode = command.execute(tokens, connection);
-		MyLogger.i("Return code : " + returnCode);
-		this.returnCode(returnCode, connection);
+		return command.execute(tokens, connection);
 	}
 	
 	public synchronized void returnCode(String returnCode, UserConnection connection) throws IOException {

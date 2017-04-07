@@ -58,7 +58,9 @@ public class UserConnection {
 					try {
 						command = br.readLine();
 						MyLogger.i("Commande : " + command);
-						CommandService.getInstance().processCommand(command, UserConnection.this);
+						final String returnCode = CommandService.getInstance().processCommand(command, UserConnection.this);
+						MyLogger.i("ReturnCode : " + returnCode);
+						CommandService.getInstance().returnCode(returnCode, UserConnection.this);
 					} catch (IOException e) {
 						e.printStackTrace();
 						running = false;
