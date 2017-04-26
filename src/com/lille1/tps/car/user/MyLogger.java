@@ -1,6 +1,5 @@
 package com.lille1.tps.car.user;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MyLogger {

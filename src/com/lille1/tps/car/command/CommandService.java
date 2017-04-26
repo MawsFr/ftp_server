@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.UserConnection;
 
 public class CommandService {

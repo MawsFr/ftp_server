@@ -1,6 +1,5 @@
 package com.lille1.tps.car.command;
 
-import com.lille1.tps.car.FTPServer;
 import com.lille1.tps.car.config.ConfigurationService;
 import com.lille1.tps.car.config.type.TYPE_FILE;
 import com.lille1.tps.car.user.UserConnection;
