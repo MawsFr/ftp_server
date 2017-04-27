@@ -5,7 +5,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import com.lille1.tps.car.command.CommandService;
-import com.lille1.tps.car.config.Configuration;
 import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.UserService;
 
@@ -15,7 +14,7 @@ public class FTPServer {
 	public static final String CRLF = "\r\n";
 	
 	// Services
-	private CommandService commandService;
+//	private CommandService commandService;
 	private UserService userService;
 	
 	private static FTPServer instance;
@@ -25,7 +24,7 @@ public class FTPServer {
 	
 	
 	private FTPServer() {
-		commandService = CommandService.getInstance();
+//		commandService = CommandService.getInstance();
 		userService = UserService.getInstance();
 		
 	}

@@ -4,25 +4,37 @@ public class User {
 	
 	private String login;
 	private String password;
+	private String associatedPath;
 	
 	public User(String login, String password) {
+		this(login, password, "");
+	}
+	
+	public User(String login, String password, String associatedPath) {
 		super();
 		this.login = login;
 		this.password = password;
+		this.associatedPath = associatedPath;
 	}
 	public User() {}
 	
 	public String getLogin() {
 		return login;
 	}
-	public void setLogin(String login) {
+	public void setLogin(final String login) {
 		this.login = login;
 	}
 	public String getPassword() {
 		return password;
 	}
-	public void setPassword(String password) {
+	public void setPassword(final String password) {
 		this.password = password;
+	}
+	public String getAssociatedPath() {
+		return associatedPath;
+	}
+	public void setAssociatedPath(final String associatedPath) {
+		this.associatedPath = associatedPath;
 	}
 	@Override
 	public int hashCode() {

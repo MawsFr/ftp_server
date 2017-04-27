@@ -1,4 +1,5 @@
 package com.lille1.tps.car.user;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -6,6 +7,9 @@ import java.util.Map;
 public class UsersDB {
 
 	private static UsersDB db;
+	static {
+		UsersDB.getInstance();
+	}
 	
 	private Map<String, User> users;
 	
@@ -15,13 +19,18 @@ public class UsersDB {
 	
 	public void init() {
 		this.users = new HashMap<>();
-		this.addUser(new User("maws", "maws"));
-		this.addUser(new User("mat", "mut"));
-		this.addUser(new User("ludo", "odul"));
+		this.addUser(new User("maws", "maws", "./users/maws"));
+		this.addUser(new User("mat", "mut", "./users/mat"));
+		this.addUser(new User("ludo", "odul", "./users/ludo"));
 	}
 	
 	public void addUser(User user) {
 		this.users.put(user.getLogin(), user);
+		final File directory = new File(user.getAssociatedPath());
+		if(!directory.exists()) {
+			MyLogger.i("Création du dossier " + user.getAssociatedPath() + "pour " + user.getLogin());
+			directory.mkdirs();
+		}
 	}
 	
 	public static UsersDB getInstance() {

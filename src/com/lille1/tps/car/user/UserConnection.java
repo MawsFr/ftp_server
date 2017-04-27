@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 import com.lille1.tps.car.command.CommandService;
+import com.lille1.tps.car.command.ReturnCodes;
 import com.lille1.tps.car.config.Configuration;
 
 public class UserConnection {
@@ -49,16 +50,16 @@ public class UserConnection {
 	}
 	
 	public void start() {
-		thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
+		thread = new Thread(() -> {
 				running = true;
 				MyLogger.i("Connexion réussie ...");
+				String returnCode = "";
 				do {
 					try {
 						command = br.readLine();
 						MyLogger.i("Commande : " + command);
-						final String returnCode = CommandService.getInstance().processCommand(command, UserConnection.this);
+						System.out.println(command);
+						returnCode = CommandService.getInstance().processCommand(command, UserConnection.this);
 						MyLogger.i("ReturnCode : " + returnCode);
 						CommandService.getInstance().returnCode(returnCode, UserConnection.this);
 					} catch (IOException e) {
@@ -66,7 +67,9 @@ public class UserConnection {
 						running = false;
 					}
 					
-				} while(running);
+				} while(running && !returnCode.equals(ReturnCodes.RC_430));
+				running = false;
+				
 				try {
 					dos.close();
 				} catch (IOException e) {
@@ -92,10 +95,13 @@ public class UserConnection {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				if(user != null) {
 				MyLogger.i("Interruption de la connection avec le user " + user.getLogin());
+				} else{
+					MyLogger.i("Interruption de la connection");
+				}
 				thread.interrupt();
 				
-			}
 		});
 		
 		thread.start();
