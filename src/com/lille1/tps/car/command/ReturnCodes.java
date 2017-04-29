@@ -19,6 +19,11 @@ public class ReturnCodes {
 	public static final String RC_227 = "227 Passive mode" + CRLF;
 	
 	/**
+	 * Extended Passive Mode
+	 */
+	public static final String RC_229 = "229 Entering Extended Passive Mode (|||{{0}}|)" + CRLF;
+	
+	/**
 	 * Login success
 	 */
 	public static final String RC_230 = "230 Login success" + CRLF;
@@ -47,6 +52,7 @@ public class ReturnCodes {
 	 * Unexisting command
 	 */
 	public static final String RC_502 = "502 Unexisting command" + CRLF;
+
 
 
 	/**

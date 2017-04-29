@@ -7,9 +7,6 @@ import java.util.Map;
 public class UsersDB {
 
 	private static UsersDB db;
-	static {
-		UsersDB.getInstance();
-	}
 	
 	private Map<String, User> users;
 	

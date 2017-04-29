@@ -33,12 +33,7 @@ public class UserService {
 
 	public void createConnection(Socket socket) {
 		UserConnection uc = new UserConnection(socket);
-		try {
-			commandService.processCommand(null, uc);
 			uc.start();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		//TODO : SEE IF MANAGER IS NEEDED
 		
 	}

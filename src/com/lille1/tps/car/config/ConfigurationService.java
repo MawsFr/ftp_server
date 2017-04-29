@@ -1,12 +1,15 @@
 package com.lille1.tps.car.config;
 
+import java.io.IOException;
+
 import com.lille1.tps.car.config.mode.MODE;
 import com.lille1.tps.car.config.type.TYPE_FILE;
 import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.UserConnection;
 
 public class ConfigurationService {
-
+	private static int port = 10000;
+	
 	private static ConfigurationService instance;
 	
 	private ConfigurationService() {}
@@ -34,7 +37,19 @@ public class ConfigurationService {
 	
 	public void setMode(MODE mode, UserConnection connection) {
 		connection.getConfig().setMode(mode);
-		MyLogger.i("Passage en mode passif");
+		if (mode == MODE.PASSIVE || mode == MODE.EXTENDED_PASSIVE) {
+			connection.getConfig().setPort(port++);
+		}
+		try {
+			connection.updateMode();
+		} catch (IOException | CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		MyLogger.i("Passage en mode " + mode);
+	}
+	
+	public MODE getMode(UserConnection connection) {
+		return connection.getConfig().getMode();
 	}
 
 	/*
@@ -52,6 +67,23 @@ public class ConfigurationService {
 		connection.getConfig().setPort(port);
 		MyLogger.i("IP : " + ip);
 		MyLogger.i("PORT : " + port);
+	}
+
+	public void setExtendedPort(String[] params, UserConnection connection) {
+		final String[] tokens = params[1].split("\\|");
+		NETWORK_PROTOCOL protocol = NETWORK_PROTOCOL.values()[Integer.valueOf(tokens[1]) - 1];
+		String ip = tokens[2];
+		int port = Integer.valueOf(tokens[3]);
+		connection.getConfig().setNetworkProtocol(protocol);
+		connection.getConfig().setIp(ip);
+		connection.getConfig().setPort(port);
+		MyLogger.i("Protocol : " + protocol);
+		MyLogger.i("IP : " + ip);
+		MyLogger.i("PORT : " + port);
+	}
+
+	public int getPort(UserConnection connection) {
+		return connection.getConfig().getPort();
 	}
 	
 }
