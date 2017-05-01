@@ -1,6 +1,7 @@
 package com.lille1.tps.car.user;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -22,9 +23,6 @@ public class UserConnection {
 
 	protected Socket downloadSocket;
 	protected ServerSocket uploadSocket;
-
-	protected UserConnection downloadConnection;
-	protected UserConnection uploadConnection;
 
 	protected Configuration config;
 
@@ -76,10 +74,12 @@ public class UserConnection {
 	public void updateMode() throws UnknownHostException, IOException {
 		switch (config.getMode()) {
 		case EXTENDED_PASSIVE: // download
-			if (uploadSocket != null) {
+			if (transferConnection != null || !transferConnection.isClosed()) {
+				transferConnection.close();
+			}
+			if (uploadSocket != null || !uploadSocket.isClosed()) {
 				uploadSocket.close();
 			}
-			// Thread t = new Thread(() -> {
 			try {
 				uploadSocket = new ServerSocket(config.getPort());
 				final Socket socket = uploadSocket.accept();
@@ -87,18 +87,10 @@ public class UserConnection {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			// });
-			// t.start();
 			break;
 		case ACTIVE: // upload
-			// downloadSocket = new
-			// Socket(InetAddress.getByName(config.getIp()),
-			// this.config.getPort());
-			// downloadConnection = (UserConnection) this.clone();
-			// downloadConnection.setSocket(downloadSocket);
-			// downloadConnection.start();
-			// RETR
-			// STOR
+			final Socket s = new Socket(InetAddress.getByName(config.getIp()), this.config.getPort());
+			transferConnection = new SocketConnection(s);
 			break;
 		default:
 			break;
@@ -144,10 +136,6 @@ public class UserConnection {
 		return command;
 	}
 
-	public UserConnection getDownloadConnection() {
-		return downloadConnection;
-	}
-
 	public Socket getDownloadSocket() {
 		return downloadSocket;
 	}
@@ -158,10 +146,6 @@ public class UserConnection {
 
 	public Thread getThread() {
 		return thread;
-	}
-
-	public UserConnection getUploadConnection() {
-		return uploadConnection;
 	}
 
 	public ServerSocket getUploadSocket() {
@@ -208,21 +192,6 @@ public class UserConnection {
 		this.uploadSocket = uploadSocket;
 	}
 
-	/**
-	 * @param downloadConnection
-	 *            Le nouveau downloadConnection
-	 */
-	public void setDownloadConnection(UserConnection downloadConnection) {
-		this.downloadConnection = downloadConnection;
-	}
-
-	/**
-	 * @param uploadConnection
-	 *            Le nouveau uploadConnection
-	 */
-	public void setUploadConnection(UserConnection uploadConnection) {
-		this.uploadConnection = uploadConnection;
-	}
 
 	/**
 	 * @param config

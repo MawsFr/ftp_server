@@ -12,6 +12,7 @@ public class EprtCommand extends Command {
 	public void execute(final String[] params, final UserConnection connection) throws IOException {
 		ConfigurationService.getInstance().setMode(MODE.ACTIVE, connection);
 		ConfigurationService.getInstance().setExtendedPort(params, connection);
+		connection.updateMode();
 		writeReturnCode(connection, ReturnCodes.RC_200);
 	}
 

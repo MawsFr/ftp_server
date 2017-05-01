@@ -153,4 +153,8 @@ public class SocketConnection implements Closeable {
 		this.dos = dos;
 	}
 
+	public boolean isClosed() {
+		return socket.isClosed();
+	}
+
 }
