@@ -7,11 +7,23 @@ public class ReturnCodes {
 	/**
 	 * Command executed OK
 	 */
+	public static final String RC_150 = "150 Opening ASCII mode data connection for file list" + CRLF;
+
+	/**
+	 * Command executed OK
+	 */
 	public static final String RC_200 = "200 Command executed OK" + CRLF;
 	/**
 	 * Service ready
 	 */
 	public static final String RC_220 = "220 Service Ready" + CRLF;
+
+	// /**
+	// * permission linkCount owner group size lastModified name
+	// */
+	// public static final String RC_226 = "226
+	// {{0}}\t\t{{1}}\t{{2}}\t{{3}}\t{{4}}\t{{5}}\t{{6}}" + CRLF;
+	public static final String RC_226 = "226 Transfer complete" + CRLF;
 
 	/**
 	 * Passive mode

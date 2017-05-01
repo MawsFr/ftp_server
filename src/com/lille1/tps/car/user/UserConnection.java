@@ -1,46 +1,34 @@
 package com.lille1.tps.car.user;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 import com.lille1.tps.car.command.CommandService;
-import com.lille1.tps.car.command.ReturnCodes;
 import com.lille1.tps.car.config.Configuration;
 
-public class UserConnection implements Cloneable {
+public class UserConnection {
 
-	private Thread thread;
-	private InputStream is;
-	private InputStreamReader isr;
-	private BufferedReader br;
+	protected Thread thread;
+	protected SocketConnection commandSocket;
+	protected SocketConnection transferConnection;
 
-	private OutputStream os;
-	private DataOutputStream dos;
+	protected Socket socket;
 
-	private Socket socket;
+	protected String command;
 
-	private String command;
+	protected User user;
 
-	private User user;
-	
-	private Socket downloadSocket;
-	private ServerSocket uploadSocket;
+	protected Socket downloadSocket;
+	protected ServerSocket uploadSocket;
 
-	private UserConnection downloadConnection;
-	private UserConnection uploadConnection;
+	protected UserConnection downloadConnection;
+	protected UserConnection uploadConnection;
 
-	private Configuration config;
+	protected Configuration config;
 
-	private boolean running;
-	private String returnCode;
+	protected boolean running;
 
 	public UserConnection() {
 	}
@@ -48,96 +36,67 @@ public class UserConnection implements Cloneable {
 	public UserConnection(Socket socket) {
 		this.socket = socket;
 		this.config = new Configuration();
-		try {
-			MyLogger.i("Création de la connexion ...");
-			is = socket.getInputStream();
-			isr = new InputStreamReader(is);
-			br = new BufferedReader(isr);
-
-			os = socket.getOutputStream();
-			dos = new DataOutputStream(os);
-		} catch (IOException e) {
-			MyLogger.e("Erreur lors de la récupération du flux d'échange ...");
-			e.printStackTrace();
-		}
+		this.commandSocket = new SocketConnection(socket);
 	}
 
 	public void start() {
 		thread = new Thread(() -> {
 			running = true;
 			MyLogger.i("Connexion réussie ...");
-			returnCode = "";
 			try {
-				processCommand(null);
+				CommandService.getInstance().processCommand(null, UserConnection.this);
 				do {
-					command = br.readLine();
+					command = commandSocket.getBr().readLine();
 					MyLogger.i("Commande : " + command);
 					System.out.println(command);
-					processCommand(command);
-
-				} while(running && !returnCode.equals(ReturnCodes.RC_430));
+					CommandService.getInstance().processCommand(command, UserConnection.this);
+				} while (running);
 			} catch (IOException e) {
 				e.printStackTrace();
 				running = false;
 			}
 			running = false;
-
 			try {
-				dos.close();
+				commandSocket.close();
 			} catch (IOException e) {
 				e.printStackTrace();
+			} finally {
+				if (user != null) {
+					MyLogger.i("Interruption de la connection avec le user " + user.getLogin());
+				} else {
+					MyLogger.i("Interruption de la connection");
+				}
+				thread.interrupt();
 			}
-			try {
-				os.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				isr.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				is.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				socket.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			if(user != null) {
-				MyLogger.i("Interruption de la connection avec le user " + user.getLogin());
-			} else{
-				MyLogger.i("Interruption de la connection");
-			}
-			thread.interrupt();
-
 		});
 
 		thread.start();
 	}
 
-	public void processCommand(String command2) throws IOException {
-		returnCode = CommandService.getInstance().processCommand(command, UserConnection.this);
-		MyLogger.i("ReturnCode : " + returnCode);
-		CommandService.getInstance().returnCode(returnCode, UserConnection.this);
-	}
-	
-	public void updateMode() throws UnknownHostException, IOException, CloneNotSupportedException {
+	public void updateMode() throws UnknownHostException, IOException {
 		switch (config.getMode()) {
 		case EXTENDED_PASSIVE: // download
 			if (uploadSocket != null) {
 				uploadSocket.close();
 			}
-			uploadSocket = new ServerSocket(config.getPort());
+			// Thread t = new Thread(() -> {
+			try {
+				uploadSocket = new ServerSocket(config.getPort());
+				final Socket socket = uploadSocket.accept();
+				transferConnection = new SocketConnection(socket);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			// });
+			// t.start();
 			break;
 		case ACTIVE: // upload
-			downloadSocket = new Socket(InetAddress.getByName(config.getIp()), this.config.getPort());
-			downloadConnection = (UserConnection) this.clone();
-			downloadConnection.setSocket(downloadSocket);
-			downloadConnection.start();
+			// downloadSocket = new
+			// Socket(InetAddress.getByName(config.getIp()),
+			// this.config.getPort());
+			// downloadConnection = (UserConnection) this.clone();
+			// downloadConnection.setSocket(downloadSocket);
+			// downloadConnection.start();
 			// RETR
 			// STOR
 			break;
@@ -145,21 +104,21 @@ public class UserConnection implements Cloneable {
 			break;
 		}
 	}
-	
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		final UserConnection clone = new UserConnection();
-		// clone.config = (Configuration) this.config.clone();
-		clone.setConfig(this.config);
-		clone.setUser(user);
-		clone.setBr(br);
-		clone.setDos(dos);
-		clone.setIs(is);
-		clone.setIsr(isr);
-		clone.setOs(os);
-		clone.setRunning(running);
-		return clone;
-	}
+
+	// @Override
+	// protected Object clone() throws CloneNotSupportedException {
+	// final UserConnection clone = new UserConnection();
+	// // clone.config = (Configuration) this.config.clone();
+	// clone.setConfig(this.config);
+	// clone.setUser(user);
+	// clone.setBr(br);
+	// clone.setDos(dos);
+	// clone.setIs(is);
+	// clone.setIsr(isr);
+	// clone.setOs(os);
+	// clone.setRunning(running);
+	// return clone;
+	// }
 
 	public boolean isRunning() {
 		return running;
@@ -167,14 +126,6 @@ public class UserConnection implements Cloneable {
 
 	public void setRunning(boolean running) {
 		this.running = running;
-	}
-
-	public DataOutputStream getDos() {
-		return dos;
-	}
-
-	public void setDos(DataOutputStream dos) {
-		this.dos = dos;
 	}
 
 	public User getUser() {
@@ -189,10 +140,6 @@ public class UserConnection implements Cloneable {
 		return config;
 	}
 
-	public BufferedReader getBr() {
-		return br;
-	}
-
 	public String getCommand() {
 		return command;
 	}
@@ -201,24 +148,8 @@ public class UserConnection implements Cloneable {
 		return downloadConnection;
 	}
 
-	public InputStream getIs() {
-		return is;
-	}
-
 	public Socket getDownloadSocket() {
 		return downloadSocket;
-	}
-
-	public InputStreamReader getIsr() {
-		return isr;
-	}
-
-	public OutputStream getOs() {
-		return os;
-	}
-
-	public String getReturnCode() {
-		return returnCode;
 	}
 
 	public Socket getSocket() {
@@ -237,40 +168,12 @@ public class UserConnection implements Cloneable {
 		return uploadSocket;
 	}
 
-	public void setBr(BufferedReader br) {
-		this.br = br;
-	}
-
 	/**
 	 * @param thread
 	 *            Le nouveau thread
 	 */
 	public void setThread(Thread thread) {
 		this.thread = thread;
-	}
-
-	/**
-	 * @param is
-	 *            Le nouveau is
-	 */
-	public void setIs(InputStream is) {
-		this.is = is;
-	}
-
-	/**
-	 * @param isr
-	 *            Le nouveau isr
-	 */
-	public void setIsr(InputStreamReader isr) {
-		this.isr = isr;
-	}
-
-	/**
-	 * @param os
-	 *            Le nouveau os
-	 */
-	public void setOs(OutputStream os) {
-		this.os = os;
 	}
 
 	/**
@@ -330,11 +233,33 @@ public class UserConnection implements Cloneable {
 	}
 
 	/**
-	 * @param returnCode
-	 *            Le nouveau returnCode
+	 * @return Le commandSocket
 	 */
-	public void setReturnCode(String returnCode) {
-		this.returnCode = returnCode;
+	public SocketConnection getCommandSocket() {
+		return commandSocket;
+	}
+
+	/**
+	 * @param commandSocket
+	 *            Le nouveau commandSocket
+	 */
+	public void setCommandSocket(SocketConnection commandSocket) {
+		this.commandSocket = commandSocket;
+	}
+
+	/**
+	 * @return Le transferConnection
+	 */
+	public SocketConnection getTransferConnection() {
+		return transferConnection;
+	}
+
+	/**
+	 * @param transferConnection
+	 *            Le nouveau transferConnection
+	 */
+	public void setTransferConnection(SocketConnection transferConnection) {
+		this.transferConnection = transferConnection;
 	}
 
 }

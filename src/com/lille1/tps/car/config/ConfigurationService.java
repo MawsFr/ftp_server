@@ -1,7 +1,5 @@
 package com.lille1.tps.car.config;
 
-import java.io.IOException;
-
 import com.lille1.tps.car.config.mode.MODE;
 import com.lille1.tps.car.config.type.TYPE_FILE;
 import com.lille1.tps.car.user.MyLogger;
@@ -39,11 +37,6 @@ public class ConfigurationService {
 		connection.getConfig().setMode(mode);
 		if (mode == MODE.PASSIVE || mode == MODE.EXTENDED_PASSIVE) {
 			connection.getConfig().setPort(port++);
-		}
-		try {
-			connection.updateMode();
-		} catch (IOException | CloneNotSupportedException e) {
-			e.printStackTrace();
 		}
 		MyLogger.i("Passage en mode " + mode);
 	}

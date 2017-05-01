@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.lille1.tps.car.command.CommandService;
 import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.UserService;
+import com.lille1.tps.car.user.UsersDB;
 
 public class FTPServer {
 	
@@ -70,6 +70,7 @@ public class FTPServer {
 	}
 	
 	public static void main(String[] args) {
+		UsersDB.getInstance().init();
 		FTPServer.getInstance().start();
 	}
 

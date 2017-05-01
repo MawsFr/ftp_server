@@ -50,7 +50,7 @@ public class CommandService {
 		this.commands.put(COMMAND_LIST, new ListCommand());
 	}
 
-	public synchronized String processCommand(String theCommand, UserConnection connection) throws IOException {
+	public synchronized void processCommand(String theCommand, UserConnection connection) throws IOException {
 		Command command = null;
 		String[] tokens = null;
 		if(theCommand == null) {
@@ -62,15 +62,9 @@ public class CommandService {
 				command = getCommand(INVALID_COMMAND);
 			}
 		}
-		return command.execute(tokens, connection);
+		command.execute(tokens, connection);
 	}
 	
-	public synchronized void returnCode(String returnCode, UserConnection connection) throws IOException {
-		connection.getDos().writeBytes(returnCode);
-		connection.getDos().flush();
-		
-	}
-
 	public synchronized Command getCommand(String command) {
 		return this.commands.get(command);
 	}

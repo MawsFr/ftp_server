@@ -1,6 +1,5 @@
 package com.lille1.tps.car.user;
 
-import java.io.IOException;
 import java.net.Socket;
 
 import com.lille1.tps.car.command.CommandService;
@@ -36,6 +35,12 @@ public class UserService {
 			uc.start();
 		//TODO : SEE IF MANAGER IS NEEDED
 		
+	}
+
+	public void connect(User user) {
+		final User user2 = UsersDB.getInstance().get(user.getLogin());
+		user.setAssociatedPath(user2.getAssociatedPath());
+
 	}
 
 }

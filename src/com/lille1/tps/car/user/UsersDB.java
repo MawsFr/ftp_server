@@ -11,14 +11,14 @@ public class UsersDB {
 	private Map<String, User> users;
 	
 	private UsersDB() {
-		init();
+		// init();
 	}
 	
 	public void init() {
 		this.users = new HashMap<>();
-		this.addUser(new User("maws", "maws", "./users/maws"));
-		this.addUser(new User("mat", "mut", "./users/mat"));
-		this.addUser(new User("ludo", "odul", "./users/ludo"));
+		this.addUser(new User("maws", "maws", "users/maws"));
+		this.addUser(new User("mat", "mut", "users/mat"));
+		this.addUser(new User("ludo", "odul", "users/ludo"));
 	}
 	
 	public void addUser(User user) {
@@ -50,5 +50,9 @@ public class UsersDB {
 	public boolean isValid(User user) {
 		final User dbUser = users.get(user.getLogin());
 		return dbUser != null && dbUser.equals(user);
+	}
+
+	public User get(String name) {
+		return this.users.get(name);
 	}
 }

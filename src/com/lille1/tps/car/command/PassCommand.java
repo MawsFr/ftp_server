@@ -1,5 +1,7 @@
 package com.lille1.tps.car.command;
 
+import java.io.IOException;
+
 import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.User;
 import com.lille1.tps.car.user.UserConnection;
@@ -8,16 +10,18 @@ import com.lille1.tps.car.user.UserService;
 public class PassCommand extends Command {
 
 	@Override
-	public String execute(String[] params, UserConnection connection) {
+	public void execute(String[] params, UserConnection connection) throws IOException {
 		MyLogger.i("Tentative de validation du mot de passe");
 		final String password = params[1];
 		final User user = connection.getUser();
 		if(UserService.getInstance().exists(user.getLogin(), password)) {
+			UserService.getInstance().connect(user);
 			MyLogger.i("Authentification réussie");
-			return ReturnCodes.RC_230;
+			writeReturnCode(connection, ReturnCodes.RC_230);
+		} else {
+			MyLogger.i("Authentification échouée");
+			writeReturnCode(connection, ReturnCodes.RC_430);
 		}
-		MyLogger.i("Authentification échouée");
-		return ReturnCodes.RC_430;
 	}
 
 }
