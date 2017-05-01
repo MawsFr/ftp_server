@@ -21,6 +21,7 @@ public class CommandService {
 	private static final String COMMAND_EPRT = "EPRT";
 	private static final String COMMAND_LIST = "LIST";
 	private static final String COMMAND_STOR = "STOR";
+	private static final String COMMAND_RETR = "RETR";
 	
 	private Map<String, Command> commands;
 	
@@ -50,6 +51,7 @@ public class CommandService {
 		this.commands.put(COMMAND_EPRT, new EprtCommand());
 		this.commands.put(COMMAND_LIST, new ListCommand());
 		this.commands.put(COMMAND_STOR, new StorCommand());
+		this.commands.put(COMMAND_RETR, new RetrCommand());
 	}
 
 	public synchronized void processCommand(String theCommand, UserConnection connection) throws IOException {

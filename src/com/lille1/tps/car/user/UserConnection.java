@@ -74,10 +74,10 @@ public class UserConnection {
 	public void updateMode() throws UnknownHostException, IOException {
 		switch (config.getMode()) {
 		case EXTENDED_PASSIVE: // download
-			if (transferConnection != null || !transferConnection.isClosed()) {
+			if (transferConnection != null && !transferConnection.isClosed()) {
 				transferConnection.close();
 			}
-			if (uploadSocket != null || !uploadSocket.isClosed()) {
+			if (uploadSocket != null && !uploadSocket.isClosed()) {
 				uploadSocket.close();
 			}
 			try {

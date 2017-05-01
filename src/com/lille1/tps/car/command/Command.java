@@ -13,10 +13,11 @@ public abstract class Command {
 		connection.getCommandSocket().getDos().flush();
 	}
 
-	public void writeData(UserConnection connection, String data) throws IOException {
+	public void writeData(UserConnection connection, Object data) throws IOException {
 		// FIXME : Créer une constante
 		System.out.println(data);
 		connection.getTransferConnection().getDos().writeBytes(data + "\n");
 		connection.getTransferConnection().getDos().flush();
 	}
+	
 }
