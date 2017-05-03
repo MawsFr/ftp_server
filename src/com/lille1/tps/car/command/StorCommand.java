@@ -26,7 +26,7 @@ public class StorCommand extends Command {
 		}
 		fos.close();
 		writeReturnCode(connection, ReturnCodes.RC_226);
-		connection.getTransferConnection().close();
+		connection.close();
 	}
 	
 }

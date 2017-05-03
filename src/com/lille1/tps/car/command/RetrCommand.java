@@ -29,7 +29,7 @@ public class RetrCommand extends Command {
 			// TODO : File doesnt exist
 			writeReturnCode(connection, ReturnCodes.RC_226);
 		}
-		connection.getTransferConnection().close();
+		connection.close();
 	}
 	
 }

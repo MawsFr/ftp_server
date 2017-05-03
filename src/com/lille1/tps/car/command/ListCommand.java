@@ -20,8 +20,7 @@ public class ListCommand extends Command {
 		writeReturnCode(connection, ReturnCodes.RC_150);
 		writeData(connection, getPathInfos(connection.getUser().getAssociatedPath()));
 		writeReturnCode(connection, ReturnCodes.RC_226);
-		connection.getTransferConnection().close();
-		// connection.getUploadSocket().close();
+		connection.close();
 	}
 
 	public String getPathInfos(final String path) throws IOException {

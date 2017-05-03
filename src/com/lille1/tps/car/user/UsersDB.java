@@ -16,17 +16,18 @@ public class UsersDB {
 	
 	public void init() {
 		this.users = new HashMap<>();
-		this.addUser(new User("maws", "maws", "users/maws"));
-		this.addUser(new User("mat", "mut", "users/mat"));
-		this.addUser(new User("ludo", "odul", "users/ludo"));
+		this.addUser(new User("maws", "maws", "users/maws/"));
+		this.addUser(new User("mat", "mut", "users/mat/"));
+		this.addUser(new User("ludo", "odul", "users/ludo/"));
 	}
 	
 	public void addUser(User user) {
 		this.users.put(user.getLogin(), user);
+		boolean created = false;
 		final File directory = new File(user.getAssociatedPath());
 		if(!directory.exists()) {
 			MyLogger.i("Création du dossier " + user.getAssociatedPath() + "pour " + user.getLogin());
-			directory.mkdirs();
+			created = directory.mkdir();
 		}
 	}
 	

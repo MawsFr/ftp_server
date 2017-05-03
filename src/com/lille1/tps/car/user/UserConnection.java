@@ -1,5 +1,6 @@
 package com.lille1.tps.car.user;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -9,7 +10,7 @@ import java.net.UnknownHostException;
 import com.lille1.tps.car.command.CommandService;
 import com.lille1.tps.car.config.Configuration;
 
-public class UserConnection {
+public class UserConnection implements Closeable {
 
 	protected Thread thread;
 	protected SocketConnection commandSocket;
@@ -74,12 +75,7 @@ public class UserConnection {
 	public void updateMode() throws UnknownHostException, IOException {
 		switch (config.getMode()) {
 		case EXTENDED_PASSIVE: // download
-			if (transferConnection != null && !transferConnection.isClosed()) {
-				transferConnection.close();
-			}
-			if (uploadSocket != null && !uploadSocket.isClosed()) {
-				uploadSocket.close();
-			}
+			close();
 			try {
 				uploadSocket = new ServerSocket(config.getPort());
 				final Socket socket = uploadSocket.accept();
@@ -97,6 +93,17 @@ public class UserConnection {
 		}
 	}
 
+	@Override
+	public void close() throws IOException {
+		if (transferConnection != null && !transferConnection.isClosed()) {
+			transferConnection.close();
+			transferConnection = null;
+		}
+		if (uploadSocket != null && !uploadSocket.isClosed()) {
+			uploadSocket.close();
+			uploadSocket = null;
+		}
+	}
 	// @Override
 	// protected Object clone() throws CloneNotSupportedException {
 	// final UserConnection clone = new UserConnection();
@@ -191,7 +198,6 @@ public class UserConnection {
 	public void setUploadSocket(ServerSocket uploadSocket) {
 		this.uploadSocket = uploadSocket;
 	}
-
 
 	/**
 	 * @param config
