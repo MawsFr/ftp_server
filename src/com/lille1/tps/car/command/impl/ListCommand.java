@@ -1,4 +1,4 @@
-package com.lille1.tps.car.command;
+package com.lille1.tps.car.command.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import com.lille1.tps.car.command.Command;
 import com.lille1.tps.car.user.UserConnection;
 
 public class ListCommand extends Command {

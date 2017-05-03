@@ -1,4 +1,4 @@
-package com.lille1.tps.car.command;
+package com.lille1.tps.car.command.impl;
 
 public class ReturnCodes {
 

@@ -1,7 +1,8 @@
-package com.lille1.tps.car.command;
+package com.lille1.tps.car.command.impl;
 
 import java.io.IOException;
 
+import com.lille1.tps.car.command.Command;
 import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.User;
 import com.lille1.tps.car.user.UserConnection;

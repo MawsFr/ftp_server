@@ -1,9 +1,10 @@
-package com.lille1.tps.car.command;
+package com.lille1.tps.car.command.impl;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import com.lille1.tps.car.command.Command;
 import com.lille1.tps.car.user.UserConnection;
 
 public class StorCommand extends Command {

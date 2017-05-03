@@ -14,12 +14,12 @@ public class Configuration implements Cloneable {
 	 */
 	private MODE mode;
 
+	/*
+	 * IPV4 / IPV6
+	 */
 	private NETWORK_PROTOCOL networkProtocol;
-	
 	private String ip;
-
 	private Integer port;
-	
 	public MODE getMode() {
 		return mode;
 	}
