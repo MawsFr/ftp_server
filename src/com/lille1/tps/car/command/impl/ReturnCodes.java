@@ -23,6 +23,11 @@ public class ReturnCodes {
 	 */
 	public static final String RC_220 = "220 Service Ready" + CRLF;
 
+	/**
+	 * Deconnection
+	 */
+	public static final String RC_221 = "221 Deconnected" + CRLF;
+
 	// /**
 	// * permission linkCount owner group size lastModified name
 	// */
@@ -46,9 +51,14 @@ public class ReturnCodes {
 	public static final String RC_230 = "230 Login success" + CRLF;
 
 	/**
+	 * Action on directory or file executed with success
+	 */
+	public static final String RC_250 = "250 CWD Changed" + CRLF;
+
+	/**
 	 * PWD Response with path
 	 */
-	public static final String RC_257 = "257 {{0}}" + CRLF;
+	public static final String RC_257 = "257 \"{{0}}\"" + CRLF;
 
 	/**
 	 * Waiting for password
@@ -70,6 +80,15 @@ public class ReturnCodes {
 	 */
 	public static final String RC_502 = "502 Unexisting command" + CRLF;
 
+	/**
+	 * No such file or directory or already existing.
+	 */
+	public static final String RC_550 = "550 No such file or directory." + CRLF;
+
+	/**
+	 * Error while saving the file
+	 */
+	public static final String RC_451 = "451 Error while saving the file" + CRLF;
 
 
 	/**

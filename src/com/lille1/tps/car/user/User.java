@@ -1,20 +1,25 @@
 package com.lille1.tps.car.user;
 
+import java.io.File;
+
 public class User {
 	
 	private String login;
 	private String password;
-	private String associatedPath;
+	private String homeDir;
+	private String currentDir;
 	
 	public User(String login, String password) {
 		this(login, password, "");
 	}
 	
-	public User(String login, String password, String associatedPath) {
+	public User(String login, String password, String homeDir) {
 		super();
 		this.login = login;
 		this.password = password;
-		this.associatedPath = associatedPath;
+		String absoluteHomeDir = new File(homeDir).getAbsolutePath();
+		this.homeDir = absoluteHomeDir;
+		this.currentDir = absoluteHomeDir;
 	}
 	public User() {}
 	
@@ -30,12 +35,21 @@ public class User {
 	public void setPassword(final String password) {
 		this.password = password;
 	}
-	public String getAssociatedPath() {
-		return associatedPath;
+	public String getHomeDir() {
+		return homeDir;
 	}
-	public void setAssociatedPath(final String associatedPath) {
-		this.associatedPath = associatedPath;
+	public void setHomeDir(final String associatedPath) {
+		this.homeDir = associatedPath;
 	}
+
+	public String getCurrentDir() {
+		return currentDir;
+	}
+
+	public void setCurrentDir(String currentDir) {
+		this.currentDir = currentDir;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

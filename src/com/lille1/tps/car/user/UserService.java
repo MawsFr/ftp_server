@@ -39,7 +39,8 @@ public class UserService {
 
 	public void connect(User user) {
 		final User user2 = UsersDB.getInstance().get(user.getLogin());
-		user.setAssociatedPath(user2.getAssociatedPath());
+		user.setHomeDir(user2.getHomeDir());
+		user.setCurrentDir(user2.getCurrentDir());
 
 	}
 

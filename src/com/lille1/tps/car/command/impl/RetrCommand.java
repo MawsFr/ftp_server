@@ -14,6 +14,8 @@ public class RetrCommand extends Command {
 	public void execute(String[] params, UserConnection connection) throws IOException {
 		writeReturnCode(connection, ReturnCodes.RC_150);
 		final String fileName = params[1];
+		final String absoluteFileName = FileManager.getInstance().getAbsolutePath(fileName,
+				connection.getUser().getCurrentDir());
 		synchronized (this) {
 			while (FileManager.getInstance().writing(fileName)) {
 				try {
@@ -24,7 +26,7 @@ public class RetrCommand extends Command {
 			}
 			FileManager.getInstance().startReading(fileName);
 		}
-		File file = new File(fileName);
+		File file = new File(absoluteFileName);
 		if (file.exists()) {
 			file.setReadable(true);
 			Files.lines(file.toPath()).forEach(l -> {

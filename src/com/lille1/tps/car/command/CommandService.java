@@ -4,16 +4,22 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.lille1.tps.car.command.impl.CdupCommand;
+import com.lille1.tps.car.command.impl.CwdCommand;
+import com.lille1.tps.car.command.impl.DeleCommand;
 import com.lille1.tps.car.command.impl.EprtCommand;
 import com.lille1.tps.car.command.impl.EpsvCommand;
 import com.lille1.tps.car.command.impl.InvalidCommand;
 import com.lille1.tps.car.command.impl.ListCommand;
+import com.lille1.tps.car.command.impl.MkdCommand;
 import com.lille1.tps.car.command.impl.PassCommand;
 import com.lille1.tps.car.command.impl.PasvCommand;
 import com.lille1.tps.car.command.impl.PortCommand;
 import com.lille1.tps.car.command.impl.PwdCommand;
+import com.lille1.tps.car.command.impl.QuitCommand;
 import com.lille1.tps.car.command.impl.ReadyCommand;
 import com.lille1.tps.car.command.impl.RetrCommand;
+import com.lille1.tps.car.command.impl.RmdCommand;
 import com.lille1.tps.car.command.impl.StorCommand;
 import com.lille1.tps.car.command.impl.TypeCommand;
 import com.lille1.tps.car.command.impl.UserCommand;
@@ -35,7 +41,14 @@ public class CommandService {
 	private static final String COMMAND_LIST = "LIST";
 	private static final String COMMAND_STOR = "STOR";
 	private static final String COMMAND_RETR = "RETR";
+	private static final String COMMAND_CWD = "CWD";
+	private static final String COMMAND_CDUP = "CDUP";
+	private static final String COMMAND_MDK = "MKD";
+	private static final String COMMAND_DELE = "DELE";
+	private static final String COMMAND_RMD = "RMD";
+	private static final String COMMAND_QUIT = "QUIT";
 	
+
 	private Map<String, Command> commands;
 	
 	private static CommandService instance;
@@ -65,6 +78,12 @@ public class CommandService {
 		this.commands.put(COMMAND_LIST, new ListCommand());
 		this.commands.put(COMMAND_STOR, new StorCommand());
 		this.commands.put(COMMAND_RETR, new RetrCommand());
+		this.commands.put(COMMAND_CWD, new CwdCommand());
+		this.commands.put(COMMAND_CDUP, new CdupCommand());
+		this.commands.put(COMMAND_MDK, new MkdCommand());
+		this.commands.put(COMMAND_DELE, new DeleCommand());
+		this.commands.put(COMMAND_RMD, new RmdCommand());
+		this.commands.put(COMMAND_QUIT, new QuitCommand());
 	}
 
 	public synchronized void processCommand(String theCommand, UserConnection connection) throws IOException {

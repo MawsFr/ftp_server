@@ -20,7 +20,7 @@ public class ListCommand extends Command {
 	@Override
 	public void execute(String[] params, UserConnection connection) throws IOException {
 		writeReturnCode(connection, ReturnCodes.RC_150);
-		writeData(connection, getPathInfos(connection.getUser().getAssociatedPath()));
+		writeData(connection, getPathInfos(connection.getUser().getCurrentDir()));
 		writeReturnCode(connection, ReturnCodes.RC_226);
 		connection.close();
 	}

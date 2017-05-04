@@ -1,5 +1,8 @@
 package com.lille1.tps.car.files;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +24,20 @@ public class FileManager {
 		}
 		return instance;
 	}
+
+	public boolean isChild(Path child, String parentText) {
+		final Path parent = Paths.get(parentText).toAbsolutePath();
+		return child.startsWith(parent);
+	}
+
+	public String getAbsolutePath(String fileOrDir, String currentDir) {
+		if (!fileOrDir.contains(File.separator)) {
+			return currentDir + File.separator + fileOrDir;
+		} else {
+			return fileOrDir;
+		}
+	}
+
 	public boolean writing(String fileName) {
 		return this.writingFiles.containsKey(fileName) && this.writingFiles.get(fileName);
 	}
@@ -49,5 +66,10 @@ public class FileManager {
 		if (readFiles.get(fileName) == 0) {
 			this.readFiles.remove(fileName);
 		}
+	}
+
+	public void delete(String fileName) {
+		this.readFiles.remove(fileName);
+		this.writingFiles.remove(fileName);
 	}
 }

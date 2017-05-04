@@ -6,6 +6,8 @@ import java.util.Map;
 
 public class UsersDB {
 
+	public static final String USERS_DIR = "users";
+
 	private static UsersDB db;
 	
 	private Map<String, User> users;
@@ -16,21 +18,29 @@ public class UsersDB {
 	
 	public void init() {
 		this.users = new HashMap<>();
-		this.addUser(new User("maws", "maws", "users/maws/"));
-		this.addUser(new User("mat", "mut", "users/mat/"));
-		this.addUser(new User("ludo", "odul", "users/ludo/"));
+		createDirectory(USERS_DIR);
+		this.addUser(new User("maws", "maws", USERS_DIR + File.separator + "maws" + File.separator));
+		this.addUser(new User("mat", "mut", USERS_DIR + File.separator + "mat" + File.separator));
+		this.addUser(new User("ludo", "odul", USERS_DIR + File.separator + "ludo" + File.separator));
 	}
 	
 	public void addUser(User user) {
 		this.users.put(user.getLogin(), user);
-		boolean created = false;
-		final File directory = new File(user.getAssociatedPath());
-		if(!directory.exists()) {
-			MyLogger.i("Création du dossier " + user.getAssociatedPath() + "pour " + user.getLogin());
-			created = directory.mkdir();
-		}
+		createDirectory(user.getHomeDir());
 	}
 	
+	public void createDirectory(String path) {
+		final File directory = new File(path);
+		if (!directory.exists()) {
+			MyLogger.i("Création du dossier " + path);
+			try {
+				directory.mkdir();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	public static UsersDB getInstance() {
 		if(db == null) {
 			db = new UsersDB();

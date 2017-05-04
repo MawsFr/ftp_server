@@ -22,7 +22,6 @@ public class UserConnection implements Closeable {
 
 	protected User user;
 
-	protected Socket downloadSocket;
 	protected ServerSocket uploadSocket;
 
 	protected Configuration config;
@@ -54,7 +53,6 @@ public class UserConnection implements Closeable {
 				e.printStackTrace();
 				running = false;
 			}
-			running = false;
 			try {
 				commandSocket.close();
 			} catch (IOException e) {
@@ -104,21 +102,6 @@ public class UserConnection implements Closeable {
 			uploadSocket = null;
 		}
 	}
-	// @Override
-	// protected Object clone() throws CloneNotSupportedException {
-	// final UserConnection clone = new UserConnection();
-	// // clone.config = (Configuration) this.config.clone();
-	// clone.setConfig(this.config);
-	// clone.setUser(user);
-	// clone.setBr(br);
-	// clone.setDos(dos);
-	// clone.setIs(is);
-	// clone.setIsr(isr);
-	// clone.setOs(os);
-	// clone.setRunning(running);
-	// return clone;
-	// }
-
 	public boolean isRunning() {
 		return running;
 	}
@@ -141,10 +124,6 @@ public class UserConnection implements Closeable {
 
 	public String getCommand() {
 		return command;
-	}
-
-	public Socket getDownloadSocket() {
-		return downloadSocket;
 	}
 
 	public Socket getSocket() {
@@ -181,14 +160,6 @@ public class UserConnection implements Closeable {
 	 */
 	public void setCommand(String command) {
 		this.command = command;
-	}
-
-	/**
-	 * @param downloadSocket
-	 *            Le nouveau downloadSocket
-	 */
-	public void setDownloadSocket(Socket downloadSocket) {
-		this.downloadSocket = downloadSocket;
 	}
 
 	/**
