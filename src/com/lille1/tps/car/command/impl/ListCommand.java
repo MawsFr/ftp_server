@@ -43,7 +43,6 @@ public class ListCommand extends Command {
 					.append(lastModified).append(SPACE).append(subFile.getName())
 					.append(ReturnCodes.CRLF);
 		}
-
 		return sb.toString();
 	}
 	

@@ -2,12 +2,14 @@ package com.lille1.tps.car.command;
 
 import java.io.IOException;
 
+import com.lille1.tps.car.command.impl.ReturnCodes;
 import com.lille1.tps.car.config.ConfigurationService;
 import com.lille1.tps.car.user.UserConnection;
+import com.lille1.tps.car.utils.MyLogger;
 
 public abstract class Command {
 	protected static final char SPACE = ' ';
-	protected static final char RETURN = '\n';
+	// protected static final char RETURN = '\n';
 
 	public abstract void execute(String[] params, UserConnection connection) throws IOException;
 
@@ -25,10 +27,12 @@ public abstract class Command {
 		default:
 			break;
 		}
+
+		MyLogger.i("Writing : " + returnCode);
 	}
 
 	public void writeData(UserConnection connection, Object data) throws IOException {
-		String value = String.valueOf(data) + RETURN;
+		String value = String.valueOf(data) + ReturnCodes.CRLF;
 		switch (ConfigurationService.getInstance().getType(connection)) {
 		case ASCII:
 			connection.getCommandSocket().getBos().write(value.getBytes(), 0, value.length());
@@ -41,5 +45,7 @@ public abstract class Command {
 		default:
 			break;
 		}
+
+		MyLogger.i("Writing : " + value);
 	}
 }
