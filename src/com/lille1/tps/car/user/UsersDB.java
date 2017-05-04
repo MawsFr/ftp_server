@@ -3,6 +3,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.lille1.tps.car.utils.MyLogger;
+
 
 public class UsersDB {
 

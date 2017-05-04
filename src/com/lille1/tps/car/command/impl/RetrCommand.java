@@ -6,8 +6,8 @@ import java.nio.file.Files;
 
 import com.lille1.tps.car.command.Command;
 import com.lille1.tps.car.files.FileManager;
-import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.UserConnection;
+import com.lille1.tps.car.utils.MyLogger;
 
 public class RetrCommand extends Command {
 

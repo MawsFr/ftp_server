@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import com.lille1.tps.car.utils.MyLogger;
+
 public class SocketConnection implements Closeable {
 	protected Socket socket;
 	private InputStream is;

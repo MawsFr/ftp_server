@@ -3,8 +3,8 @@ package com.lille1.tps.car.command.impl;
 import java.io.IOException;
 
 import com.lille1.tps.car.command.Command;
-import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.UserConnection;
+import com.lille1.tps.car.utils.MyLogger;
 
 public class InvalidCommand extends Command {
 

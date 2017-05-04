@@ -2,16 +2,12 @@ package com.lille1.tps.car.user;
 
 import java.net.Socket;
 
-import com.lille1.tps.car.command.CommandService;
-
 
 public class UserService {
 	
 	private static UserService instance;
-	private CommandService commandService;
 	
 	private UserService() {
-		commandService = CommandService.getInstance();
 	}
 	
 	public static UserService getInstance() {
@@ -31,10 +27,8 @@ public class UserService {
 	}
 
 	public void createConnection(Socket socket) {
-		UserConnection uc = new UserConnection(socket);
-			uc.start();
-		//TODO : SEE IF MANAGER IS NEEDED
-		
+		final UserConnection uc = new UserConnection(socket);
+		uc.start();
 	}
 
 	public void connect(User user) {

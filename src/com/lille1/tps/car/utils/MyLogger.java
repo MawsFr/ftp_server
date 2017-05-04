@@ -1,4 +1,4 @@
-package com.lille1.tps.car.user;
+package com.lille1.tps.car.utils;
 
 import java.util.logging.Logger;
 
@@ -6,6 +6,9 @@ public class MyLogger {
 	
 	private final static Logger LOGGER = Logger.getLogger(MyLogger.class.getName());
 	
+	private MyLogger() {
+	}
+
 	public static void e(String message) {
 		LOGGER.severe(message);
 	}

@@ -1,6 +1,5 @@
 package com.lille1.tps.car.user;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -9,8 +8,9 @@ import java.net.UnknownHostException;
 
 import com.lille1.tps.car.command.CommandService;
 import com.lille1.tps.car.config.Configuration;
+import com.lille1.tps.car.utils.MyLogger;
 
-public class UserConnection implements Closeable {
+public class UserConnection {
 
 	protected Thread thread;
 	protected SocketConnection commandSocket;
@@ -91,7 +91,6 @@ public class UserConnection implements Closeable {
 		}
 	}
 
-	@Override
 	public void close() throws IOException {
 		if (transferConnection != null && !transferConnection.isClosed()) {
 			transferConnection.close();

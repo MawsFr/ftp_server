@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.UserService;
 import com.lille1.tps.car.user.UsersDB;
+import com.lille1.tps.car.utils.MyLogger;
 
 public class FTPServer {
 	

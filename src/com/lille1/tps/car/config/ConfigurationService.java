@@ -1,7 +1,7 @@
 package com.lille1.tps.car.config;
 
-import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.UserConnection;
+import com.lille1.tps.car.utils.MyLogger;
 
 public class ConfigurationService {
 	private static int port = 10000;
