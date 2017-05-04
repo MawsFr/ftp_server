@@ -21,6 +21,7 @@ public class UsersDB {
 	public void init() {
 		this.users = new HashMap<>();
 		createDirectory(USERS_DIR);
+		this.addUser(new User("test", "test", USERS_DIR + File.separator + "test" + File.separator));
 		this.addUser(new User("maws", "maws", USERS_DIR + File.separator + "maws" + File.separator));
 		this.addUser(new User("mat", "mut", USERS_DIR + File.separator + "mat" + File.separator));
 		this.addUser(new User("ludo", "odul", USERS_DIR + File.separator + "ludo" + File.separator));
