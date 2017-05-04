@@ -9,7 +9,6 @@ public class PwdCommand extends Command {
 
 	@Override
 	public void execute(String[] params, UserConnection connection) throws IOException {
-		// final File file = new File(connection.getUser().getHomeDir());
 		writeReturnCode(connection,
 				ReturnCodes.compile(ReturnCodes.RC_257, connection.getUser().getCurrentDir()));
 	}
