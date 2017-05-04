@@ -76,5 +76,9 @@ public class ConfigurationService {
 	public int getPort(UserConnection connection) {
 		return connection.getConfig().getPort();
 	}
+
+	public Type getType(UserConnection connection) {
+		return connection.getConfig().getTypeFile();
+	}
 	
 }

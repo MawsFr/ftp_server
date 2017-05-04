@@ -12,6 +12,7 @@ import com.lille1.tps.car.command.impl.EpsvCommand;
 import com.lille1.tps.car.command.impl.InvalidCommand;
 import com.lille1.tps.car.command.impl.ListCommand;
 import com.lille1.tps.car.command.impl.MkdCommand;
+import com.lille1.tps.car.command.impl.NoopCommand;
 import com.lille1.tps.car.command.impl.PassCommand;
 import com.lille1.tps.car.command.impl.PasvCommand;
 import com.lille1.tps.car.command.impl.PortCommand;
@@ -46,6 +47,7 @@ public class CommandService {
 	private static final String COMMAND_MDK = "MKD";
 	private static final String COMMAND_DELE = "DELE";
 	private static final String COMMAND_RMD = "RMD";
+	private static final String COMMAND_NOOP = "NOOP";
 	private static final String COMMAND_QUIT = "QUIT";
 	
 
@@ -83,6 +85,7 @@ public class CommandService {
 		this.commands.put(COMMAND_MDK, new MkdCommand());
 		this.commands.put(COMMAND_DELE, new DeleCommand());
 		this.commands.put(COMMAND_RMD, new RmdCommand());
+		this.commands.put(COMMAND_NOOP, new NoopCommand());
 		this.commands.put(COMMAND_QUIT, new QuitCommand());
 	}
 

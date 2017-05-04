@@ -2,6 +2,7 @@ package com.lille1.tps.car.command;
 
 import java.io.IOException;
 
+import com.lille1.tps.car.config.ConfigurationService;
 import com.lille1.tps.car.user.UserConnection;
 
 public abstract class Command {
@@ -11,13 +12,34 @@ public abstract class Command {
 	public abstract void execute(String[] params, UserConnection connection) throws IOException;
 
 	public void writeReturnCode(UserConnection connection, String returnCode) throws IOException {
-		connection.getCommandSocket().getDos().writeBytes(returnCode + RETURN);
-		connection.getCommandSocket().getDos().flush();
+		switch (ConfigurationService.getInstance().getType(connection)) {
+		case ASCII:
+			connection.getCommandSocket().getBos().write(returnCode.getBytes(), 0, returnCode.length());
+			connection.getCommandSocket().getBos().flush();
+			break;
+
+		case IMAGE:
+			connection.getCommandSocket().getDos().writeBytes(returnCode);
+			connection.getCommandSocket().getDos().flush();
+			break;
+		default:
+			break;
+		}
 	}
 
 	public void writeData(UserConnection connection, Object data) throws IOException {
-		connection.getTransferConnection().getDos().writeBytes(String.valueOf(data) + RETURN);
-		connection.getTransferConnection().getDos().flush();
+		String value = String.valueOf(data) + RETURN;
+		switch (ConfigurationService.getInstance().getType(connection)) {
+		case ASCII:
+			connection.getCommandSocket().getBos().write(value.getBytes(), 0, value.length());
+			connection.getCommandSocket().getBos().flush();
+			break;
+		case IMAGE:
+			connection.getTransferConnection().getDos().writeBytes(value);
+			connection.getTransferConnection().getDos().flush();
+			break;
+		default:
+			break;
+		}
 	}
-	
 }

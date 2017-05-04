@@ -13,8 +13,10 @@ import com.lille1.tps.car.utils.MyLogger;
 public class UserConnection {
 
 	protected Thread thread;
+
 	protected SocketConnection commandSocket;
-	protected SocketConnection transferConnection;
+	protected SocketConnection transferConnection; // active
+	protected ServerSocket uploadSocket; // Passive
 
 	protected Socket socket;
 
@@ -22,7 +24,6 @@ public class UserConnection {
 
 	protected User user;
 
-	protected ServerSocket uploadSocket;
 
 	protected Configuration config;
 
@@ -72,17 +73,14 @@ public class UserConnection {
 
 	public void updateMode() throws UnknownHostException, IOException {
 		switch (config.getMode()) {
-		case EXTENDED_PASSIVE: // download
+		case EXTENDED_PASSIVE:
 			close();
-			try {
-				uploadSocket = new ServerSocket(config.getPort());
-				final Socket socket = uploadSocket.accept();
-				transferConnection = new SocketConnection(socket);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			uploadSocket = new ServerSocket(config.getPort());
+			final Socket socket = uploadSocket.accept();
+			transferConnection = new SocketConnection(socket);
 			break;
-		case ACTIVE: // upload
+		case ACTIVE:
+			close();
 			final Socket s = new Socket(InetAddress.getByName(config.getIp()), this.config.getPort());
 			transferConnection = new SocketConnection(s);
 			break;

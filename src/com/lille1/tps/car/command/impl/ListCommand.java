@@ -40,7 +40,8 @@ public class ListCommand extends Command {
 			final String lastModified = "" + sdf.format(new Date(subFile.lastModified()));
 			sb.append(permission).append(SPACE).append(SPACE).append(SPACE).append(linkCount).append(SPACE)
 					.append(owner).append(SPACE).append(group).append(SPACE).append(size).append(SPACE)
-					.append(lastModified).append(SPACE).append(subFile.getName()).append(RETURN);
+					.append(lastModified).append(SPACE).append(subFile.getName())
+					.append(ReturnCodes.CRLF);
 		}
 
 		return sb.toString();

@@ -1,5 +1,6 @@
 package com.lille1.tps.car.user;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.DataOutputStream;
@@ -17,6 +18,8 @@ public class SocketConnection implements Closeable {
 	private InputStreamReader isr;
 	private BufferedReader br;
 
+	private BufferedOutputStream bos;
+
 	private OutputStream os;
 	private DataOutputStream dos;
 
@@ -30,6 +33,7 @@ public class SocketConnection implements Closeable {
 
 			os = socket.getOutputStream();
 			dos = new DataOutputStream(os);
+			bos = new BufferedOutputStream(os);
 		} catch (IOException e) {
 			MyLogger.e("Erreur lors de la récupération du flux d'échange ...");
 			e.printStackTrace();
@@ -65,92 +69,50 @@ public class SocketConnection implements Closeable {
 		}
 	}
 
-	/**
-	 * @return Le socket
-	 */
 	public Socket getSocket() {
 		return socket;
 	}
 
-	/**
-	 * @param socket
-	 *            Le nouveau socket
-	 */
 	public void setSocket(Socket socket) {
 		this.socket = socket;
 	}
 
-	/**
-	 * @return Le is
-	 */
 	public InputStream getIs() {
 		return is;
 	}
 
-	/**
-	 * @param is
-	 *            Le nouveau is
-	 */
 	public void setIs(InputStream is) {
 		this.is = is;
 	}
 
-	/**
-	 * @return Le isr
-	 */
 	public InputStreamReader getIsr() {
 		return isr;
 	}
 
-	/**
-	 * @param isr
-	 *            Le nouveau isr
-	 */
 	public void setIsr(InputStreamReader isr) {
 		this.isr = isr;
 	}
 
-	/**
-	 * @return Le br
-	 */
 	public BufferedReader getBr() {
 		return br;
 	}
 
-	/**
-	 * @param br
-	 *            Le nouveau br
-	 */
 	public void setBr(BufferedReader br) {
 		this.br = br;
 	}
 
-	/**
-	 * @return Le os
-	 */
 	public OutputStream getOs() {
 		return os;
 	}
 
-	/**
-	 * @param os
-	 *            Le nouveau os
-	 */
 	public void setOs(OutputStream os) {
 		this.os = os;
 	}
 
-	/**
-	 * @return Le dos
-	 */
 	public DataOutputStream getDos() {
 		return dos;
 	}
 
-	/**
-	 * @param dos
-	 *            Le nouveau dos
-	 */
 	public void setDos(DataOutputStream dos) {
 		this.dos = dos;
 	}
@@ -158,5 +120,14 @@ public class SocketConnection implements Closeable {
 	public boolean isClosed() {
 		return socket.isClosed();
 	}
+
+	public BufferedOutputStream getBos() {
+		return bos;
+	}
+
+	public void setBos(BufferedOutputStream bos) {
+		this.bos = bos;
+	}
+
 
 }

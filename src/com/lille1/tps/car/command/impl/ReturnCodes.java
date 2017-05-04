@@ -2,7 +2,7 @@ package com.lille1.tps.car.command.impl;
 
 public class ReturnCodes {
 
-	public static final String CRLF = "\r\n";
+	public static final String CRLF = System.lineSeparator();
 
 	/**
 	 * Connection established
@@ -66,10 +66,20 @@ public class ReturnCodes {
 	public static final String RC_331 = "331 Waiting for password" + CRLF;
 
 	/**
+	 * 425 Cannot establish connection
+	 */
+	public static final String RC_425 = "425 Cannot establish connection" + CRLF;
+
+	/**
 	 * Invalid login or password
 	 */
 	public static final String RC_430 = "430 Invalid login or password" + CRLF;
-	
+
+	/**
+	 * Error while saving the file
+	 */
+	public static final String RC_451 = "451 Error while saving the file" + CRLF;
+
 	/**
 	 * Syntax error
 	 */
@@ -85,10 +95,6 @@ public class ReturnCodes {
 	 */
 	public static final String RC_550 = "550 No such file or directory." + CRLF;
 
-	/**
-	 * Error while saving the file
-	 */
-	public static final String RC_451 = "451 Error while saving the file" + CRLF;
 
 
 	/**

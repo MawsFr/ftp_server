@@ -1,8 +1,8 @@
 package com.lille1.tps.car.command.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import com.lille1.tps.car.command.Command;
 import com.lille1.tps.car.files.FileManager;
@@ -32,18 +32,13 @@ public class RetrCommand extends Command {
 		if (file.exists()) {
 			file.setReadable(true);
 			MyLogger.i("Retrieving " + absoluteFileName);
-			Files.lines(file.toPath()).forEach(l -> {
-				try {
-					writeData(connection, l);
-				} catch (IOException e) {
-					e.printStackTrace();
-					try {
-						writeReturnCode(connection, ReturnCodes.RC_550);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}
-			});
+			FileInputStream fis = new FileInputStream(file);
+			int theByte = -1;
+			do {
+				theByte = fis.read();
+				writeData(connection, theByte);
+			} while (theByte != -1);
+			fis.close();
 			writeReturnCode(connection, ReturnCodes.RC_226);
 		} else {
 			writeReturnCode(connection, ReturnCodes.RC_550);

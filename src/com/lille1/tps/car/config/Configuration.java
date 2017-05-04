@@ -1,6 +1,6 @@
 package com.lille1.tps.car.config;
 
-public class Configuration implements Cloneable {
+public class Configuration {
 	/*
 	 *  TYPE
 	 */
@@ -17,6 +17,11 @@ public class Configuration implements Cloneable {
 	private NetworkProtocol networkProtocol;
 	private String ip;
 	private Integer port;
+
+	public Configuration() {
+		typeFile = Type.ASCII;
+	}
+
 	public Mode getMode() {
 		return mode;
 	}
@@ -55,17 +60,6 @@ public class Configuration implements Cloneable {
 	
 	public void setNetworkProtocol(NetworkProtocol networkProtocol) {
 		this.networkProtocol = networkProtocol;
-	}
-	
-	@Override
-	public Object clone() throws CloneNotSupportedException {
-		Configuration clone = new Configuration();
-		clone.setIp(new String(this.ip));
-		clone.setMode(mode);
-		clone.setNetworkProtocol(networkProtocol);
-		clone.setPort(new Integer(port));
-		clone.setTypeFile(typeFile);
-		return clone;
 	}
 	
 }
