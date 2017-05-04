@@ -5,6 +5,11 @@ public class ReturnCodes {
 	public static final String CRLF = "\r\n";
 
 	/**
+	 * Connection established
+	 */
+	public static final String RC_125 = "125 Connection established, beginning transfer" + CRLF;
+
+	/**
 	 * Command executed OK
 	 */
 	public static final String RC_150 = "150 Opening ASCII mode data connection for file list" + CRLF;

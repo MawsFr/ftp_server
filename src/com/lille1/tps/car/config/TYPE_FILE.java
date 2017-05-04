@@ -1,4 +1,4 @@
-package com.lille1.tps.car.config.type;
+package com.lille1.tps.car.config;
 
 public enum TYPE_FILE {
 	ASCII("A"), 

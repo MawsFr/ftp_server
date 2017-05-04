@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.lille1.tps.car.command.Command;
 import com.lille1.tps.car.config.ConfigurationService;
-import com.lille1.tps.car.config.type.TYPE_FILE;
+import com.lille1.tps.car.config.TYPE_FILE;
 import com.lille1.tps.car.user.UserConnection;
 
 public class TypeCommand extends Command {

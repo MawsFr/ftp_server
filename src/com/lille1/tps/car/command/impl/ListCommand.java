@@ -15,6 +15,7 @@ import com.lille1.tps.car.user.UserConnection;
 public class ListCommand extends Command {
 
 	private static final char SPACE = ' ';
+	private static final char RETURN = '\n';
 
 	@Override
 	public void execute(String[] params, UserConnection connection) throws IOException {
@@ -28,17 +29,21 @@ public class ListCommand extends Command {
 		// permission linkCount owner group size lastModified name
 		final StringBuilder sb = new StringBuilder();
 		final File file = new File(path);
-		final PosixFileAttributes posixFileAttributes = Files.readAttributes(file.toPath(), PosixFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
-		final String permission = getPermissions(file);
-		final String linkCount = "" + Files.readAttributes(file.toPath(), "unix:nlink").get("nlink");
-		final String owner = posixFileAttributes.owner().getName();
-		final String group = posixFileAttributes.group().getName();
-		final String size = "" + posixFileAttributes.size();
-		SimpleDateFormat sdf = new SimpleDateFormat("MMM MM yyyy", Locale.ENGLISH);
-		final String lastModified = "" + sdf.format(new Date(file.lastModified()));
-		sb.append(permission).append(SPACE).append(SPACE).append(SPACE).append(linkCount).append(SPACE)
-				.append(owner).append(SPACE).append(group).append(SPACE).append(size).append(SPACE).append(lastModified)
-				.append(SPACE).append(file.getName());
+		for (File subFile : file.listFiles()) {
+			final PosixFileAttributes posixFileAttributes = Files.readAttributes(subFile.toPath(),
+					PosixFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
+			final String permission = getPermissions(subFile);
+			final String linkCount = "" + Files.readAttributes(subFile.toPath(), "unix:nlink").get("nlink");
+			final String owner = posixFileAttributes.owner().getName();
+			final String group = posixFileAttributes.group().getName();
+			final String size = "" + posixFileAttributes.size();
+			SimpleDateFormat sdf = new SimpleDateFormat("MMM MM yyyy", Locale.ENGLISH);
+			final String lastModified = "" + sdf.format(new Date(subFile.lastModified()));
+			sb.append(permission).append(SPACE).append(SPACE).append(SPACE).append(linkCount).append(SPACE)
+					.append(owner).append(SPACE).append(group).append(SPACE).append(size).append(SPACE)
+					.append(lastModified).append(SPACE).append(subFile.getName()).append(RETURN);
+		}
+
 		return sb.toString();
 	}
 	

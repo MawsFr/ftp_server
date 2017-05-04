@@ -1,8 +1,5 @@
 package com.lille1.tps.car.config;
 
-import com.lille1.tps.car.config.mode.MODE;
-import com.lille1.tps.car.config.type.TYPE_FILE;
-
 public class Configuration implements Cloneable {
 	/*
 	 *  TYPE

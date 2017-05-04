@@ -1,7 +1,5 @@
 package com.lille1.tps.car.config;
 
-import com.lille1.tps.car.config.mode.MODE;
-import com.lille1.tps.car.config.type.TYPE_FILE;
 import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.UserConnection;
 
