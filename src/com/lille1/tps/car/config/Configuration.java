@@ -4,32 +4,32 @@ public class Configuration implements Cloneable {
 	/*
 	 *  TYPE
 	 */
-	private TYPE_FILE typeFile;
+	private Type typeFile;
 	
 	/*
 	 * MODE passive / active
 	 */
-	private MODE mode;
+	private Mode mode;
 
 	/*
 	 * IPV4 / IPV6
 	 */
-	private NETWORK_PROTOCOL networkProtocol;
+	private NetworkProtocol networkProtocol;
 	private String ip;
 	private Integer port;
-	public MODE getMode() {
+	public Mode getMode() {
 		return mode;
 	}
 
-	public void setMode(MODE mode) {
+	public void setMode(Mode mode) {
 		this.mode = mode;
 	}
 
-	public TYPE_FILE getTypeFile() {
+	public Type getTypeFile() {
 		return typeFile;
 	}
 	
-	public void setTypeFile(TYPE_FILE typeFile) {
+	public void setTypeFile(Type typeFile) {
 		this.typeFile = typeFile;
 	}
 
@@ -49,11 +49,11 @@ public class Configuration implements Cloneable {
 		this.port = port;
 	}
 	
-	public NETWORK_PROTOCOL getNetworkProtocol() {
+	public NetworkProtocol getNetworkProtocol() {
 		return networkProtocol;
 	}
 	
-	public void setNetworkProtocol(NETWORK_PROTOCOL networkProtocol) {
+	public void setNetworkProtocol(NetworkProtocol networkProtocol) {
 		this.networkProtocol = networkProtocol;
 	}
 	

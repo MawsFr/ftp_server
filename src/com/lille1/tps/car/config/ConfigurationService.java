@@ -22,7 +22,7 @@ public class ConfigurationService {
 	 * TYPE
 	 */
 	// TODO : Add printing mode
-	public void setType(TYPE_FILE type, UserConnection connection) { 
+	public void setType(Type type, UserConnection connection) { 
 		connection.getConfig().setTypeFile(type);
 		MyLogger.i("TYPE de fichier a tranférer : " + type);
 	}
@@ -31,15 +31,15 @@ public class ConfigurationService {
 	 * MODE
 	 */
 	
-	public void setMode(MODE mode, UserConnection connection) {
+	public void setMode(Mode mode, UserConnection connection) {
 		connection.getConfig().setMode(mode);
-		if (mode == MODE.PASSIVE || mode == MODE.EXTENDED_PASSIVE) {
+		if (mode == Mode.PASSIVE || mode == Mode.EXTENDED_PASSIVE) {
 			connection.getConfig().setPort(port++);
 		}
 		MyLogger.i("Passage en mode " + mode);
 	}
 	
-	public MODE getMode(UserConnection connection) {
+	public Mode getMode(UserConnection connection) {
 		return connection.getConfig().getMode();
 	}
 
@@ -62,7 +62,7 @@ public class ConfigurationService {
 
 	public void setExtendedPort(String[] params, UserConnection connection) {
 		final String[] tokens = params[1].split("\\|");
-		NETWORK_PROTOCOL protocol = NETWORK_PROTOCOL.values()[Integer.valueOf(tokens[1]) - 1];
+		NetworkProtocol protocol = NetworkProtocol.values()[Integer.valueOf(tokens[1]) - 1];
 		String ip = tokens[2];
 		int port = Integer.valueOf(tokens[3]);
 		connection.getConfig().setNetworkProtocol(protocol);
