@@ -15,8 +15,6 @@ import com.lille1.tps.car.user.UserConnection;
 public class ListCommand extends Command {
 
 	private static final String DATE_FORMAT = "MMM MM yyyy";
-	private static final char SPACE = ' ';
-	private static final char RETURN = '\n';
 
 	@Override
 	public void execute(String[] params, UserConnection connection) throws IOException {
