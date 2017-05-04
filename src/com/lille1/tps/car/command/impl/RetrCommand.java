@@ -6,6 +6,7 @@ import java.nio.file.Files;
 
 import com.lille1.tps.car.command.Command;
 import com.lille1.tps.car.files.FileManager;
+import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.UserConnection;
 
 public class RetrCommand extends Command {
@@ -22,6 +23,7 @@ public class RetrCommand extends Command {
 					wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					writeReturnCode(connection, ReturnCodes.RC_550);
 				}
 			}
 			FileManager.getInstance().startReading(fileName);
@@ -29,17 +31,22 @@ public class RetrCommand extends Command {
 		File file = new File(absoluteFileName);
 		if (file.exists()) {
 			file.setReadable(true);
+			MyLogger.i("Retrieving " + absoluteFileName);
 			Files.lines(file.toPath()).forEach(l -> {
 				try {
 					writeData(connection, l);
 				} catch (IOException e) {
 					e.printStackTrace();
+					try {
+						writeReturnCode(connection, ReturnCodes.RC_550);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 				}
 			});
 			writeReturnCode(connection, ReturnCodes.RC_226);
 		} else {
-			// TODO : File doesnt exist
-			// writeReturnCode(connection, ReturnCodes.RC_226);
+			writeReturnCode(connection, ReturnCodes.RC_550);
 		}
 		synchronized (this) {
 			FileManager.getInstance().stopReading(fileName);

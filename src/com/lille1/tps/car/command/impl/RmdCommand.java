@@ -18,6 +18,7 @@ public class RmdCommand extends Command {
 					wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					writeReturnCode(connection, ReturnCodes.RC_550);
 				}
 			}
 			FileManager.getInstance().startWriting(fileName);

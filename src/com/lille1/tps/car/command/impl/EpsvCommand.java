@@ -13,7 +13,7 @@ public class EpsvCommand extends Command {
 	public void execute(final String[] params, final UserConnection connection) throws IOException {
 		ConfigurationService.getInstance().setMode(Mode.EXTENDED_PASSIVE, connection);
 		int port = ConfigurationService.getInstance().getPort(connection);
-		writeReturnCode(connection, ReturnCodes.compile(ReturnCodes.RC_229, "" + port));
+		writeReturnCode(connection, ReturnCodes.compile(ReturnCodes.RC_229, String.valueOf(port)));
 		connection.updateMode();
 	}
 

@@ -24,6 +24,7 @@ public class MkdCommand extends Command {
 					wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					writeReturnCode(connection, ReturnCodes.RC_550);
 				}
 			}
 			FileManager.getInstance().startWriting(directoryName);
@@ -35,9 +36,9 @@ public class MkdCommand extends Command {
 			FileAttribute<Set<PosixFilePermission>> attr = PosixFilePermissions.asFileAttribute(perms);
 			Files.createDirectory(file.toPath(), attr);
 			// Files.createDirectory(file.toPath());
-			file.setWritable(true);
-			file.setReadable(true);
-			file.setExecutable(true);
+			// file.setWritable(true);
+			// file.setReadable(true);
+			// file.setExecutable(true);
 			writeReturnCode(connection, ReturnCodes.compile(ReturnCodes.RC_257, directoryName));
 		} else {
 			writeReturnCode(connection, ReturnCodes.RC_550);

@@ -7,6 +7,7 @@ import java.nio.file.Files;
 
 import com.lille1.tps.car.command.Command;
 import com.lille1.tps.car.files.FileManager;
+import com.lille1.tps.car.user.MyLogger;
 import com.lille1.tps.car.user.UserConnection;
 
 public class StorCommand extends Command {
@@ -23,21 +24,22 @@ public class StorCommand extends Command {
 					wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					writeReturnCode(connection, ReturnCodes.RC_550);
 				}
 			}
 			FileManager.getInstance().startWriting(fileName);
 		}
 		File file = new File(absoluteFileName);
-		System.out.println("Storing File" + absoluteFileName);
+		MyLogger.i("Storing File" + absoluteFileName);
 		if (file.exists()) {
 			file.delete();
 		}
 		
 		try {
 			Files.createFile(file.toPath());
-			file.setReadable(true);
-			file.setWritable(true);
-			FileOutputStream fos = new FileOutputStream(file);
+			// file.setReadable(true);
+			// file.setWritable(true);
+			final FileOutputStream fos = new FileOutputStream(file);
 			int c = -1;
 			while ((c = connection.getTransferConnection().getBr().read()) >= 0) {
 				fos.write(c);

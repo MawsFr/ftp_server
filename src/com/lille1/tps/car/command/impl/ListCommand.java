@@ -14,6 +14,7 @@ import com.lille1.tps.car.user.UserConnection;
 
 public class ListCommand extends Command {
 
+	private static final String DATE_FORMAT = "MMM MM yyyy";
 	private static final char SPACE = ' ';
 	private static final char RETURN = '\n';
 
@@ -36,8 +37,8 @@ public class ListCommand extends Command {
 			final String linkCount = "" + Files.readAttributes(subFile.toPath(), "unix:nlink").get("nlink");
 			final String owner = posixFileAttributes.owner().getName();
 			final String group = posixFileAttributes.group().getName();
-			final String size = "" + posixFileAttributes.size();
-			SimpleDateFormat sdf = new SimpleDateFormat("MMM MM yyyy", Locale.ENGLISH);
+			final String size = String.valueOf(posixFileAttributes.size());
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
 			final String lastModified = "" + sdf.format(new Date(subFile.lastModified()));
 			sb.append(permission).append(SPACE).append(SPACE).append(SPACE).append(linkCount).append(SPACE)
 					.append(owner).append(SPACE).append(group).append(SPACE).append(size).append(SPACE)
@@ -48,12 +49,14 @@ public class ListCommand extends Command {
 	}
 	
 	public String getPermissions(final File file) {
+		StringBuilder sb = new StringBuilder();
 		char isDirectory = file.isDirectory() ? 'd' : '-';
 		char isReadable = file.canRead() ? 'r' : '-';
 		char isWritable = file.canWrite() ? 'w' : '-';
 		char isAccessible = file.isDirectory() ? 'x' : '-';
-		return "" + isDirectory + isReadable + isWritable + isAccessible + "------";
-
+		sb.append(isDirectory).append(isReadable).append(isWritable).append(isAccessible).append("------");
+		return sb.toString();
+		
 	}
 
 }

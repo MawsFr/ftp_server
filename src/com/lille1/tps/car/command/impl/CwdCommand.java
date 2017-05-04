@@ -16,7 +16,6 @@ public class CwdCommand extends Command {
 		if (file.isDirectory()
 				&& FileManager.getInstance().isChild(file.toPath(), connection.getUser().getHomeDir())) {
 			connection.getUser().setCurrentDir(directoryName);
-			System.out.println("Current dir : " + directoryName);
 			writeReturnCode(connection, ReturnCodes.RC_250);
 
 		} else {
