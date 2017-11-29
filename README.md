@@ -1,6 +1,6 @@
-#### Implémentation d'un serveur FTP
-### README
-# Mustapha NEZZARI
+# Implémentation d'un serveur FTP
+## README
+### Mustapha NEZZARI
 ## Contenu de l’archive
 - Un dossier src avec toutes les sources
 - Un fichier exécutable .jar
