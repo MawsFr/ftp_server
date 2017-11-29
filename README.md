@@ -1,14 +1,14 @@
-###README
-#Mustapha NEZZARI
-##Contenu de l’archive
+### README
+# Mustapha NEZZARI
+## Contenu de l’archive
 - Un dossier src avec toutes les sources
 - Un fichier exécutable .jar
 - Un script de lancement sur un système unix
-##Pré-requis
+## Pré-requis
 - Linux ou Mac
 - Filezilla client !
 - JRE 1.8 (Utilisation de lambda)
-##Etapes à suivre
+## Etapes à suivre
 - Dans une ligne de commande, se placer dans le dossier du projet
 - Exécutez la commande “chmod +x run.sh && ./run.sh”
 - Un dossier users est créé dans le même répertoire
@@ -44,7 +44,7 @@ Voici un scénario de test :
 - Supprimer le fichier
 - Revenez en arrière avec “..”
 - Supprimez le dossier
-##Difficultés rencontrées
+## Difficultés rencontrées
 Je suis sur mac.
 Le serveur FTP ne fonctionne plus sur windows depuis que j’ai utilisé des classe spécifique aux
 systèmes unix (PermissionFile, etc)
